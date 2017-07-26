@@ -2,6 +2,7 @@ package com.sap.openapi.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 
 
 /**
@@ -11,6 +12,9 @@ import javax.persistence.Id;
 public class UserDetails {
 
     @Id
+    @GeneratedValue
+    private int uid;
+
     private String email;
 
     private String name;
@@ -24,6 +28,10 @@ public class UserDetails {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public int getUid() {
+        return uid;
     }
 
     public String getName() {

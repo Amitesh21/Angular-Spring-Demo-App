@@ -1,6 +1,7 @@
 package com.sap.openapi.controller;
 
 import com.sap.openapi.model.UserDetails;
+import org.apache.catalina.util.ManifestResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,20 +34,28 @@ public class LoginController {
 
     @PostMapping(value="/register")
     public ResponseEntity<UserDetails> register(@RequestBody UserDetails user){
+
         UserDetails userDetails = new UserDetails(user.getName(), user.getEmail(), user.getPassword());
         loginService.register(userDetails);
         return new ResponseEntity(userDetails, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/{email:.+}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public  ResponseEntity<UserDetails> getUser(@PathVariable("email") String email){
+     public  ResponseEntity<UserDetails> getUser(@PathVariable("email") String email){
         //LOG.debug("Fetching user detail: ", email);
-        UserDetails user = loginService.findById(email);
+        UserDetails user = loginService.findById(1);
         return (user == null) ?  new ResponseEntity(null, HttpStatus.NOT_FOUND)
                 : new ResponseEntity(user, HttpStatus.OK);
     }
 
-    @CrossOrigin
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
+    public  ResponseEntity<UserDetails> deleteUser(@PathVariable("id") int uid){
+        //LOG.debug("Fetching user detail: ", email);
+        loginService.deleteUser(uid);
+        return new ResponseEntity(null, HttpStatus.OK);
+    }
+
+
     @RequestMapping (value = "/users", method = RequestMethod.GET)
     public  ResponseEntity<List<UserDetails>> getAllUser(){
         //LOG.debug("Finding All User Details");

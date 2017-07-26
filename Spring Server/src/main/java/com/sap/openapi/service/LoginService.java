@@ -16,19 +16,25 @@ public class LoginService {
     private LoginRepository loginRepository;
 
     public boolean validateAccount(String email, String pwd){
-        UserDetails user = loginRepository.findOne(email);
-        if (user == null)
-            return false;
-        return (user.getPassword().equals(pwd)) ? true : false;
+//        UserDetails user = loginRepository.findOne(email);
+//        if (user == null)
+//            return false;
+//        return (user.getPassword().equals(pwd)) ? true : false;
+        return true;
     }
 
     public void register(UserDetails user){
-        System.out.println("inside register service");
+        System.out.println("inside register service"+user);
         loginRepository.save(user);
     }
 
-    public UserDetails findById(String email){
-        return loginRepository.findOne(email);
+    public UserDetails findById(int uid){
+        return loginRepository.findOne(uid);
+    }
+
+    public void deleteUser(int uid){
+        UserDetails user = loginRepository.findOne(uid);
+        loginRepository.delete(user);
     }
 
     public List<UserDetails> getAllUser(){
@@ -37,4 +43,5 @@ public class LoginService {
                 .forEach(list :: add);
         return list;
     }
+
 }

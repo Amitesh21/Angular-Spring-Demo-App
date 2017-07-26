@@ -5,6 +5,6 @@ import com.sap.openapi.model.UserDetails;
 /**
  * Created by i861135 on 6/30/17.
  */
-public interface LoginRepository  extends CrudRepository<UserDetails, String>{
+public interface LoginRepository  extends CrudRepository<UserDetails, Integer>{
 
 }
